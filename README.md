@@ -26,20 +26,19 @@ The package includes a pretrained random-forest model and a 100-row example data
 
 1. Install [R](https://cran.r-project.org/) and optionally [RStudio](https://posit.co/download/rstudio-desktop/).
 2. Open the **R Console** in RStudio (not a Markdown document).
-3. Run the following commands, **replacing `YOUR_GITHUB_USERNAME` with the actual owner of this repository**:
+3. Run the following commands in your R console:
 
 ```r
-# Install the GitHub package installer once, if needed
+# Install remotes once, if needed
 install.packages("remotes")
 
-# Install m6APrediction and its declared dependencies
-remotes::install_github("YOUR_GITHUB_USERNAME/m6APrediction", dependencies = TRUE)
+# Install m6APrediction from GitHub
+remotes::install_github("mumuzishuo/m6APrediction", upgrade = "never")
 
 # Load the installed package
 library(m6APrediction)
 ```
-
-You can also use `devtools::install_github("YOUR_GITHUB_USERNAME/m6APrediction")` if `devtools` is installed. **The GitHub repository must already be published**, and your account must have permission to access it. If it is public, no GitHub login is ordinarily needed for installation.
+You can also use `devtools::install_github("mumuzishuo/m6APrediction")` if `devtools` is installed. **The GitHub repository must already be published**, and your account must have permission to access it. If it is public, no GitHub login is ordinarily needed for installation.
 
 **Confirm installation:**
 
@@ -166,9 +165,8 @@ Each row passed to `prediction_multiple()` must contain **all seven columns** be
 | `gc_content` | Numeric | GC-content feature supplied to the classifier |
 | `RNA_type` | Categorical: `mRNA`, `lincRNA`, `lncRNA`, `pseudogene` | Transcript biotype |
 | `RNA_region` | Categorical: `CDS`, `intron`, `3'UTR`, `5'UTR` | Region of the transcript |
-| `exon_length` | Numeric | Exon-length-derived predictor; **use the same feature representation as the training data** |
-| `distance_to_junction` | Numeric | Distance-to-junction-derived predictor; **use the same feature representation as the training data** |
-| `evolutionary_conservation` | Numeric | Conservation-score predictor |
+| `exon_length` | Numeric, already log2-transformed | Exon-length feature on the same scale as the bundled example data |
+| `distance_to_junction` | Numeric, already log2-transformed | Distance-to-junction feature on the same scale as the bundled example data || `evolutionary_conservation` | Numeric | Conservation-score predictor |
 | `DNA_5mer` | Character, exactly five `A/T/C/G` letters | Local sequence context around the candidate site |
 
 The function converts `RNA_type` and `RNA_region` to factors, splits the sequence context into `nt_pos1` ... `nt_pos5`, and passes the features to the saved random forest. The fitted classifier uses positions **1, 2, 4 and 5** of the five-mer (as well as the other predictors). The candidate A is conventionally at the centre of the five-mer; use the data representation shown in the provided CSV.

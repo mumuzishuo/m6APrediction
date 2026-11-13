@@ -11,7 +11,8 @@ Description: Provides functions for predicting N6-methyladenosine
     based on sequence and genomic features.
 License: MIT + file LICENSE
 Imports:
-    randomForest
+    randomForest,
+    stats
 Depends:
     R (>= 3.5.0)
 Encoding: UTF-8
