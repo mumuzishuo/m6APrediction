@@ -166,7 +166,8 @@ Each row passed to `prediction_multiple()` must contain **all seven columns** be
 | `RNA_type` | Categorical: `mRNA`, `lincRNA`, `lncRNA`, `pseudogene` | Transcript biotype |
 | `RNA_region` | Categorical: `CDS`, `intron`, `3'UTR`, `5'UTR` | Region of the transcript |
 | `exon_length` | Numeric, already log2-transformed | Exon-length feature on the same scale as the bundled example data |
-| `distance_to_junction` | Numeric, already log2-transformed | Distance-to-junction feature on the same scale as the bundled example data || `evolutionary_conservation` | Numeric | Conservation-score predictor |
+| `distance_to_junction` | Numeric, already log2-transformed | Distance-to-junction feature on the same scale as the bundled example data |
+| `evolutionary_conservation` | Numeric | Conservation-score predictor |
 | `DNA_5mer` | Character, exactly five `A/T/C/G` letters | Local sequence context around the candidate site |
 
 The function converts `RNA_type` and `RNA_region` to factors, splits the sequence context into `nt_pos1` ... `nt_pos5`, and passes the features to the saved random forest. The fitted classifier uses positions **1, 2, 4 and 5** of the five-mer (as well as the other predictors). The candidate A is conventionally at the centre of the five-mer; use the data representation shown in the provided CSV.
